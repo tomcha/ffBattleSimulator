@@ -13,6 +13,13 @@ type Character struct {
 	luck    int
 }
 
+type Monster struct {
+	name    string
+	skill   int
+	stamina int
+	attack  int
+}
+
 func main() {
 	var c Character
 	c.name = "Tomcha"
@@ -21,6 +28,14 @@ func main() {
 	c.luck = roleDice(2, 6)
 
 	fmt.Println(c)
+
+	var m Monster
+	m.name = "goblin"
+	m.skill = 5
+	m.stamina = 3
+	m.attack = 1
+
+	fmt.Println(m)
 }
 
 func roleDice(times int, hedron int) int {
