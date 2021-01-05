@@ -36,6 +36,9 @@ func main() {
 	m.attack = 1
 
 	fmt.Println(m)
+	battle(&c, &m)
+	fmt.Println(c)
+	fmt.Println(m)
 }
 
 func roleDice(times int, hedron int) int {
@@ -45,4 +48,28 @@ func roleDice(times int, hedron int) int {
 		total += rand.Intn(hedron) + 1
 	}
 	return total
+}
+
+func battle(c *Character, m *Monster) {
+	var winner string
+loop:
+	for {
+		if c.stamina <= 0 || m.stamina <= 0 {
+			break loop
+		}
+		ca := roleDice(2, 6) + c.skill
+		ma := roleDice(2, 6) + m.skill
+		if ca > ma {
+			m.stamina -= 2
+		} else if ma > ca {
+			c.stamina -= 2
+		}
+	}
+
+	if c.stamina > m.stamina {
+		winner = c.name
+	} else {
+		winner = m.name
+	}
+	fmt.Println(winner, "is win")
 }
