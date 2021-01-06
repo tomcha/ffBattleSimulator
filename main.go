@@ -13,12 +13,12 @@ type Character struct {
 	luck    int
 }
 
-func (c Character) calcAttack() int {
+func (c *Character) calcAttack() int {
 	attackPoint := c.skill + roleDice(2, 6)
 	return attackPoint
 }
 
-func (c Character) calcDamaged() {
+func (c *Character) calcDamaged() {
 	c.stamina -= 2
 }
 
@@ -27,6 +27,15 @@ type Monster struct {
 	skill   int
 	stamina int
 	attack  int
+}
+
+func (m *Monster) calcAttack() int {
+	attackPoint := m.skill + roleDice(2, 6)
+	return attackPoint
+}
+
+func (m *Monster) calcDamaged() {
+	m.stamina -= 2
 }
 
 func main() {
@@ -60,16 +69,16 @@ func roleDice(times int, hedron int) int {
 }
 
 func battle(c *Character, m *Monster) {
-	var winner string
+	var winner, looser string
 loop:
 	for {
 		if c.stamina <= 0 || m.stamina <= 0 {
 			break loop
 		}
 		ca := c.calcAttack()
-		ma := roleDice(2, 6) + m.skill
+		ma := m.calcAttack()
 		if ca > ma {
-			m.stamina -= 2
+			m.calcDamaged()
 		} else if ma > ca {
 			c.calcDamaged()
 		}
@@ -77,8 +86,11 @@ loop:
 
 	if c.stamina > m.stamina {
 		winner = c.name
+		looser = m.name
 	} else {
 		winner = m.name
+		looser = c.name
 	}
 	fmt.Println(winner, "is win")
+	fmt.Println(looser, "is loose")
 }
