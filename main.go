@@ -13,6 +13,15 @@ type Character struct {
 	luck    int
 }
 
+func (c Character) calcAttack() int {
+	attackPoint := c.skill + roleDice(2, 6)
+	return attackPoint
+}
+
+func (c Character) calcDamaged() {
+	c.stamina -= 2
+}
+
 type Monster struct {
 	name    string
 	skill   int
@@ -57,12 +66,12 @@ loop:
 		if c.stamina <= 0 || m.stamina <= 0 {
 			break loop
 		}
-		ca := roleDice(2, 6) + c.skill
+		ca := c.calcAttack()
 		ma := roleDice(2, 6) + m.skill
 		if ca > ma {
 			m.stamina -= 2
 		} else if ma > ca {
-			c.stamina -= 2
+			c.calcDamaged()
 		}
 	}
 
