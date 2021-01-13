@@ -43,20 +43,7 @@ func (m *Monster) calcDamaged() {
 }
 
 func main() {
-
-	// monster.yamlを []byte として読み込みます。
-	buf, err := ioutil.ReadFile("./monster.yaml")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// []byte を []map[string]string に変換します。
-	data, err := ReadOnSliceMap(buf)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	data, _ := readMonsterYamlFile()
 	numberOfMonsterTypes := len(data)
 
 	var c Character
@@ -66,23 +53,36 @@ func main() {
 	c.luck = roleDice(2, 6)
 
 	fmt.Println(c)
+	wc := 0
+	for c.stamina > 0 {
+		rand.Seed(time.Now().UnixNano())
+		n := rand.Intn(numberOfMonsterTypes)
 
-	rand.Seed(time.Now().UnixNano())
-	n := rand.Intn(numberOfMonsterTypes)
+		var m Monster
+		m.name = data[n]["name"]
+		m.skill, _ = strconv.Atoi(data[n]["skill"])
+		m.stamina, _ = strconv.Atoi(data[n]["stamina"])
+		m.attack, _ = strconv.Atoi(data[n]["attack"])
 
-	var m Monster
-	m.name = data[n]["name"]
-	m.skill, _ = strconv.Atoi(data[n]["skill"])
-	m.stamina, _ = strconv.Atoi(data[n]["stamina"])
-	m.attack, _ = strconv.Atoi(data[n]["attack"])
-
-	fmt.Println(m)
-	battle(&c, &m)
-	fmt.Println(c)
-	fmt.Println(m)
+		battle(&c, &m)
+		wc += 1
+	}
+	fmt.Printf("%s は %d 回の戦闘に勝利した後、死亡しました。\n", c.name, wc)
 }
 
-func readMonsterYamlFile() {
+func readMonsterYamlFile() ([]map[string]string, error) {
+	// monster.yamlを []byte として読み込みます。
+	buf, err := ioutil.ReadFile("./monster.yaml")
+	if err != nil {
+		fmt.Println(err)
+		return []map[string]string{}, err
+	}
+	// []byte を []map[string]string に変換します。
+	data, err := ReadOnSliceMap(buf)
+	if err != nil {
+		return []map[string]string{}, err
+	}
+	return data, nil
 }
 
 // yaml形式の[]byteを渡すと[]map[string]stringに変換してくれる関数です。
