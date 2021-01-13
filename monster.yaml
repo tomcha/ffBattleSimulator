@@ -1,0 +1,24 @@
+- name: goblin
+  skill: 5
+  stamina: 3
+  attack: 1
+- name: oak
+  skill: 6
+  stamina: 3
+  attack: 1
+- name: gremlin
+  skill: 6
+  staina: 4
+  attack: 1
+- name: big rat
+  skill: 5
+  staina: 4
+  attack: 1
+- name: skelton
+  skill: 6
+  staina: 5
+  attack: 1
+- name: troll
+  skill: 8
+  staina: 7
+  attack: 3
