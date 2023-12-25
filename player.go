@@ -40,7 +40,14 @@ func (p *Player) calcDamage(dp int) (isDead bool) {
 	return
 }
 
-func (p *Player) lucktest() (isLucky bool) {
+func (p *Player) lucktest() (bool, error) {
+	var isLucky bool
+	var err error
+	if p.luck <= 0 {
+		isLucky = false
+		err = fmt.Errorf("error")
+		return isLucky, err
+	}
 	judgePoint := rand.Intn(6) + rand.Intn(6) + 2
 	if judgePoint > p.luck {
 		isLucky = false
@@ -48,5 +55,6 @@ func (p *Player) lucktest() (isLucky bool) {
 		isLucky = true
 	}
 	p.luck -= 1
-	return
+	err = nil
+	return isLucky, err
 }
