@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 )
 
 type Player struct {
@@ -14,9 +13,13 @@ type Player struct {
 
 func (p *Player) createNewCharactor(n string) {
 	p.name = n
-	p.skill = rand.Intn(6) + 7
-	p.stamina = rand.Intn(6) + rand.Intn(6) + 14
-	p.luck = rand.Intn(6) + 7
+	d := Dice{}
+	d.rollDice(1, 6)
+	p.skill = d.diceValue + 6
+	d.rollDice(2, 6)
+	p.stamina = d.diceValue + 12
+	d.rollDice(1, 6)
+	p.luck = d.diceValue + 6
 }
 
 func (p *Player) outputStatus() {
@@ -27,7 +30,9 @@ func (p *Player) outputStatus() {
 }
 
 func (p *Player) calcAttackPoint() (ap int) {
-	ap = rand.Intn(6) + rand.Intn(6) + 2 + p.skill
+	d := Dice{}
+	d.rollDice(2, 6)
+	ap = d.diceValue + p.skill
 	return
 }
 
@@ -48,7 +53,9 @@ func (p *Player) lucktest() (bool, error) {
 		err = fmt.Errorf("error")
 		return isLucky, err
 	}
-	judgePoint := rand.Intn(6) + rand.Intn(6) + 2
+	d := Dice{}
+	d.rollDice(2, 6)
+	judgePoint := d.diceValue
 	if judgePoint > p.luck {
 		isLucky = false
 	} else {
