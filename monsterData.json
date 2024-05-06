@@ -1,0 +1,47 @@
+{
+  "Name": "monster_list",
+  "Monsters": [
+    {
+      "Name": "goblin",
+      "Id": 1,
+      "SkillPoint": 5,
+      "StaminaPoint": 4,
+      "AttackPoint": 1
+    },
+    {
+      "Name": "orc",
+      "Id": 2,
+      "SkillPoint": 6,
+      "StaminaPoint": 3,
+      "AttackPoint": 1
+    },
+    {
+      "Name": "gremlin",
+      "Id": 3,
+      "SkillPoint": 6,
+      "StaminaPoint": 4,
+      "AttackPoint": 1
+    },
+    {
+      "Name": "giant rat",
+      "Id": 4,
+      "SkillPoint": 5,
+      "StaminaPoint": 4,
+      "AttackPoint": 1
+    },
+    {
+      "Name": "sleleton",
+      "Id": 5,
+      "SkillPoint": 6,
+      "StaminaPoint": 5,
+      "AttackPoint": 1
+    },
+    {
+      "Name": "troll",
+      "Id": 6,
+      "SkillPoint": 8,
+      "StaminaPoint": 7,
+      "AttackPoint": 3
+    }
+  ]
+}
