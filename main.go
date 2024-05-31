@@ -38,7 +38,7 @@ func main() {
 		round += 1
 	}
 	if p.isDead() {
-		fmt.Printf("%s is dead! You lose!\n")
+		fmt.Printf("%s is dead! You lose!\n", p.name)
 	}
 	fmt.Println("Game End")
 }
