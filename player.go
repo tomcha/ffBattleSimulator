@@ -65,3 +65,10 @@ func (p *Player) lucktest() (bool, error) {
 	err = nil
 	return isLucky, err
 }
+
+func (p *Player) isDead() bool {
+	if p.stamina <= 0 {
+		return true
+	}
+	return false
+}
